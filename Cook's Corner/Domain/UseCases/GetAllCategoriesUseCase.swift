@@ -8,6 +8,16 @@
 import Foundation
 import Combine
 
-protocol GetAllCategoriesUseCase {
+protocol GetAllCategoriesUseCaseProtocol {
     func execute() -> AnyPublisher<[Category], Error>
+}
+
+final class GetAllCategoriesUseCase: GetAllCategoriesUseCaseProtocol {
+    private let repository: RepositoryProtocol
+    init(repository: RepositoryProtocol) {
+        self.repository = repository
+    }
+    func execute() -> AnyPublisher<[Category], any Error> {
+        repository.getAllCategories()
+    }
 }

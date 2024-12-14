@@ -8,6 +8,16 @@
 import Foundation
 import Combine
 
-protocol GetMealsByCategoryUseCase {
+protocol GetMealsByCategoryUseCaseProtocol {
     func execute(category: String) -> AnyPublisher<[Meal], Error>
+}
+
+final class GetMealsByCategoryUseCase: GetMealsByCategoryUseCaseProtocol {
+    private let repository: RepositoryProtocol
+    init(repository: RepositoryProtocol) {
+        self.repository = repository
+    }
+    func execute(category: String) -> AnyPublisher<[Meal], any Error> {
+        repository.getMealsByCategory(category: category)
+    }
 }
