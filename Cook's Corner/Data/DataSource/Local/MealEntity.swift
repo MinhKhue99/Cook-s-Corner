@@ -9,33 +9,33 @@ import Foundation
 import RealmSwift
 
 class MealEntity: Object, ObjectKeyIdentifiable {
-    @Persisted(primaryKey: true) var id: String
-    @Persisted var meal: String
-    @Persisted var mealThumb: String
-    @Persisted var category: String
-    @Persisted var instructions: String
-    @Persisted var stringYoutube: String
-    @Persisted var ingredient1: String
-    @Persisted var ingredient2: String
-    @Persisted var ingredient3: String
-    @Persisted var ingredient4: String
-    @Persisted var ingredient5: String
-    @Persisted var ingredient6: String
-    @Persisted var ingredient7: String
-    @Persisted var ingredient8: String
-    @Persisted var ingredient9: String
-    @Persisted var measure1: String
-    @Persisted var measure2: String
+    @Persisted(primaryKey: true) var id: String?
+    @Persisted var meal: String?
+    @Persisted var mealThumb: String?
+    @Persisted var category: String?
+    @Persisted var instructions: String?
+    @Persisted var stringYoutube: String?
+    @Persisted var ingredient1: String?
+    @Persisted var ingredient2: String?
+    @Persisted var ingredient3: String?
+    @Persisted var ingredient4: String?
+    @Persisted var ingredient5: String?
+    @Persisted var ingredient6: String?
+    @Persisted var ingredient7: String?
+    @Persisted var ingredient8: String?
+    @Persisted var ingredient9: String?
+    @Persisted var measure1: String?
+    @Persisted var measure2: String?
     @Persisted var measure3: String
-    @Persisted var measure4: String
-    @Persisted var measure5: String
-    @Persisted var measure6: String
-    @Persisted var measure7: String
-    @Persisted var measure8: String
-    @Persisted var measure9: String
+    @Persisted var measure4: String?
+    @Persisted var measure5: String?
+    @Persisted var measure6: String?
+    @Persisted var measure7: String?
+    @Persisted var measure8: String?
+    @Persisted var measure9: String?
 
     var mealThumbURL: URL? {
-        return URL(string: mealThumb)
+        return URL(string: mealThumb ?? "")
     }
 
     convenience init(meal: Meal) {
