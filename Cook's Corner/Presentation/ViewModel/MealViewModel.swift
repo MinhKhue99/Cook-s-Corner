@@ -28,47 +28,55 @@ final class MealViewModel: ObservableObject {
         self.getAllCategoriesUseCase = getAllCategoriesUseCase
         self.getMealsByCategoryUseCase = getMealsByCategoryUseCase
         self.searchMealUseCase = searchMealUseCase
+        getAllCategories()
     }
 
     func getAllCategories() {
-        self.isLoading = true
+        isLoading = true
+
         getAllCategoriesUseCase.execute()
-            .catch {[weak self] error -> Just<[Category]> in
-                self?.alert = AlertContent(title: "Get category fail", message: error.localizedDescription)
-                return Just([])
+            .mapError { [weak self] error -> Error in
+                self?.alert = AlertContent(title: "Get category failed", message: error.localizedDescription)
+                return error
             }
-            .sink(receiveValue: {[weak self] categories in
+            .replaceError(with: [])
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] categories in
                 self?.categories = categories
                 self?.isLoading = false
-            })
+            }
             .store(in: &cancellables)
     }
 
     func getMealsByCategory(category: String) {
         self.isLoading = true
         getMealsByCategoryUseCase.execute(category: category)
-            .catch {[weak self] error -> Just<[Meal]> in
+            .mapError {[weak self] error -> Error in
                 self?.alert = AlertContent(title: "Get meal fail", message: error.localizedDescription)
-                return Just([])
+                return error
             }
-            .sink(receiveValue: {[weak self] meals in
+            .replaceError(with: [])
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] meals in
                 self?.meals = meals
                 self?.isLoading = false
-            })
+            }
             .store(in: &cancellables)
     }
 
     func searchMeal(name: String) {
         self.isLoading = true
         searchMealUseCase.execute(name: name)
-            .catch {[weak self] error -> Just<[Meal]> in
+            .mapError {[weak self] error -> Error in
                 self?.alert = AlertContent(title: "Get meal fail", message: error.localizedDescription)
-                return Just([])
+                return error
             }
-            .sink(receiveValue: {[weak self] meals in
-                self?.meals = meals
+            .replaceError(with: [])
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] meals in
+                self?.searchMealResult = meals
                 self?.isLoading = false
-            })
+            }
             .store(in: &cancellables)
     }
 }

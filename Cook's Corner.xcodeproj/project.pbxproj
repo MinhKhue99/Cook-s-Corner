@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		500EA4D12D09ECC4006F0F61 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 500EA4D02D09ECC4006F0F61 /* RealmSwift */; };
+		50D63E772D0DBE410080BB35 /* YouTubePlayerKit in Frameworks */ = {isa = PBXBuildFile; productRef = 50D63E762D0DBE410080BB35 /* YouTubePlayerKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50D63E772D0DBE410080BB35 /* YouTubePlayerKit in Frameworks */,
 				500EA4D12D09ECC4006F0F61 /* RealmSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -71,6 +73,7 @@
 			name = "Cook's Corner";
 			packageProductDependencies = (
 				500EA4D02D09ECC4006F0F61 /* RealmSwift */,
+				50D63E762D0DBE410080BB35 /* YouTubePlayerKit */,
 			);
 			productName = "Cook's Corner";
 			productReference = 500EA4A92D09D628006F0F61 /* Cook's Corner.app */;
@@ -102,6 +105,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				500EA4CF2D09ECC4006F0F61 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				50D63E752D0DBE410080BB35 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 500EA4AA2D09D628006F0F61 /* Products */;
@@ -343,6 +347,14 @@
 				kind = branch;
 			};
 		};
+		50D63E752D0DBE410080BB35 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SvenTiigi/YouTubePlayerKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.9.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -350,6 +362,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 500EA4CF2D09ECC4006F0F61 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		50D63E762D0DBE410080BB35 /* YouTubePlayerKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 50D63E752D0DBE410080BB35 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */;
+			productName = YouTubePlayerKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

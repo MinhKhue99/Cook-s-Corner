@@ -11,7 +11,13 @@ import SwiftUI
 struct Cook_s_CornerApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            let api = MealService()
+            let repository = MealsRepository(api: api)
+            let getAllCategoriesUseCase = GetAllCategoriesUseCase(repository: repository)
+            let getMealsByCategoryUseCase = GetMealsByCategoryUseCase(repository: repository)
+            let searchMealUseCase = SearchMealUseCase(repository: repository)
+            let viewmodel = MealViewModel(getAllCategoriesUseCase: getAllCategoriesUseCase, getMealsByCategoryUseCase: getMealsByCategoryUseCase, searchMealUseCase: searchMealUseCase)
+            HomeView(viewmodel: viewmodel)
         }
     }
 }

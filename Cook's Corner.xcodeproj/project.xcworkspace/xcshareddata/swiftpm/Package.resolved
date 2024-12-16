@@ -1,5 +1,5 @@
 {
-  "originHash" : "182db11c87d1734fe53a6366b674339f70901a93290bd85def29b63e25e34c43",
+  "originHash" : "a58a2290d10c8afb18ba5d558756e69df5a8d38ed114349ebca8f2cfbf1e962e",
   "pins" : [
     {
       "identity" : "realm-core",
@@ -17,6 +17,15 @@
       "state" : {
         "branch" : "master",
         "revision" : "5553cfd1c789efdb3d6daf7f0cc0733cfe601846"
+      }
+    },
+    {
+      "identity" : "youtubeplayerkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SvenTiigi/YouTubePlayerKit.git",
+      "state" : {
+        "revision" : "fe1c1ec340f6d79866131432ecaa190fd6bbc4cb",
+        "version" : "1.9.0"
       }
     }
   ],
