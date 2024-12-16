@@ -15,21 +15,32 @@ final class MealService: MealServiceProtocol {
         request.addValue("application/json", forHTTPHeaderField: "Accept")
 
         return URLSession.shared.dataTaskPublisher(for: request)
-            .map { $0.data }
-            .decode(type: [Category].self, decoder: JSONDecoder())
-            .receive(on: DispatchQueue.main)
+            .tryMap { output in
+                // Check for a valid HTTP response
+                guard let httpResponse = output.response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                    throw URLError(.badServerResponse)
+                }
+                return output.data
+            }
+            .decode(type: CategoryResponse.self, decoder: JSONDecoder())
+            .map(\.categories) // Extract the categories array
             .eraseToAnyPublisher()
     }
-    
+
     func getMealsByCategory(category: String) -> AnyPublisher<[Meal], any Error> {
         var request = URLRequest(url: Endpoints.getMealsByCategory(category: category).url)
         request.httpMethod = HTTPMethods.GET.rawValue
         request.addValue("application/json", forHTTPHeaderField: "Accept")
 
         return URLSession.shared.dataTaskPublisher(for: request)
-            .map { $0.data }
-            .decode(type: [Meal].self, decoder: JSONDecoder())
-            .receive(on: DispatchQueue.main)
+            .tryMap { output in
+                guard let httpResponse = output.response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                    throw URLError(.badServerResponse)
+                }
+                return output.data
+            }
+            .decode(type: MealResponse.self, decoder: JSONDecoder())
+            .map(\.meals)
             .eraseToAnyPublisher()
     }
     
@@ -39,9 +50,14 @@ final class MealService: MealServiceProtocol {
         request.addValue("application/json", forHTTPHeaderField: "Accept")
 
         return URLSession.shared.dataTaskPublisher(for: request)
-            .map { $0.data }
-            .decode(type: [Meal].self, decoder: JSONDecoder())
-            .receive(on: DispatchQueue.main)
+            .tryMap { output in
+                guard let httpResponse = output.response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                    throw URLError(.badServerResponse)
+                }
+                return output.data
+            }
+            .decode(type: MealResponse.self, decoder: JSONDecoder())
+            .map(\.meals)
             .eraseToAnyPublisher()
     }
 }
