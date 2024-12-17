@@ -15,7 +15,7 @@ protocol RepositoryProtocol {
     func searchMeal(name: String) -> AnyPublisher<[Meal], Error>
 
     //Local
-    func saveMeal(_ meal: Meal)
-    func deleteMeal(_ meal: MealEntity)
-
+    func saveMeal(meal: Meal) -> AnyPublisher<Void, Error>
+    func deleteMeal(meal: MealEntity) -> AnyPublisher<Void, Error>
+    func getAllSavedMeals() -> AnyPublisher<[MealEntity], Error>
 }

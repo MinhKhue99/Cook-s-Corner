@@ -28,7 +28,7 @@ final class MealsRepository: RepositoryProtocol {
         api.searchMeal(name: name)
     }
 
-    func saveMeal(_ meal: Meal) {
+    func saveMeal(meal: Meal) {
         do {
             try realm.write {
                 let entity = MealEntity(meal: meal)
@@ -39,13 +39,42 @@ final class MealsRepository: RepositoryProtocol {
         }
     }
 
-    func deleteMeal(_ meal: MealEntity) {
-        do {
-            try realm.write {
-                realm.delete(meal)
+    func saveMeal(meal: Meal) -> AnyPublisher<Void, any Error> {
+        return Future<Void, Error> { promise in
+            do {
+                try self.realm.write {
+                    let mealEntity = MealEntity(meal: meal)
+                    self.realm.add(mealEntity, update: .modified)
+                }
+                promise(.success(()))
+            } catch {
+                promise(.failure(error))
             }
-        } catch let error {
-            print("Failed to delete meal: \(error.localizedDescription)")
         }
+        .eraseToAnyPublisher()
+    }
+
+    func deleteMeal(meal: MealEntity) -> AnyPublisher<Void, any Error> {
+        return Future<Void, Error> { promise in
+            do {
+                try self.realm.write {
+                    if let objectToDelete = self.realm.object(ofType: MealEntity.self, forPrimaryKey: meal.id) {
+                        self.realm.delete(objectToDelete)
+                    }
+                }
+                promise(.success(()))
+            } catch {
+                promise(.failure(error))
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+
+    func getAllSavedMeals() -> AnyPublisher<[MealEntity], any Error> {
+        return Future<[MealEntity], Error> { promise in
+            let meals = Array(self.realm.objects(MealEntity.self))
+            promise(.success(meals))
+        }
+        .eraseToAnyPublisher()
     }
 }
