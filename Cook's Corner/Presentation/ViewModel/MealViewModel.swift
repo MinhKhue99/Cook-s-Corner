@@ -40,7 +40,7 @@ final class MealViewModel: ObservableObject {
         getAllCategories()
     }
 
-    func getAllCategories() {
+    private func getAllCategories() {
         isLoading = true
 
         getAllCategoriesUseCase.execute()
@@ -122,6 +122,7 @@ final class MealViewModel: ObservableObject {
 
             }, receiveValue: { meals in
                 self.savedMeals = meals
+                print("KhuePM: \(meals)")
             })
             .store(in: &cancellables)
 

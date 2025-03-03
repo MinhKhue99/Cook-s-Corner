@@ -31,8 +31,7 @@ final class MealsRepository: RepositoryProtocol {
     func saveMeal(meal: Meal) {
         do {
             try realm.write {
-                let entity = MealEntity(meal: meal)
-                realm.add(entity)
+
             }
         } catch let error {
             print("Failed to add meal: \(error.localizedDescription)")
@@ -43,7 +42,30 @@ final class MealsRepository: RepositoryProtocol {
         return Future<Void, Error> { promise in
             do {
                 try self.realm.write {
-                    let mealEntity = MealEntity(meal: meal)
+                    let mealEntity = MealEntity()
+                    mealEntity.meal = meal.strMeal
+                    mealEntity.mealThumbURL = meal.strMealThumb
+                    mealEntity.category = meal.strCategory
+                    mealEntity.instructions = meal.strInstructions
+                    mealEntity.stringYoutube = meal.strYoutube
+                    mealEntity.ingredient1 = meal.strIngredient1
+                    mealEntity.ingredient2 = meal.strIngredient2
+                    mealEntity.ingredient3 = meal.strIngredient3
+                    mealEntity.ingredient4 = meal.strIngredient4
+                    mealEntity.ingredient5 = meal.strIngredient5
+                    mealEntity.ingredient6 = meal.strIngredient6
+                    mealEntity.ingredient7 = meal.strIngredient7
+                    mealEntity.ingredient8 = meal.strIngredient8
+                    mealEntity.ingredient9 = meal.strIngredient9
+                    mealEntity.measure1 = meal.strMeasure1
+                    mealEntity.measure2 = meal.strMeasure2
+                    mealEntity.measure3 = meal.strMeasure3
+                    mealEntity.measure4 = meal.strMeasure4
+                    mealEntity.measure5 = meal.strMeasure5
+                    mealEntity.measure6 = meal.strMeasure6
+                    mealEntity.measure7 = meal.strMeasure7
+                    mealEntity.measure8 = meal.strMeasure8
+                    mealEntity.measure9 = meal.strMeasure9
                     self.realm.add(mealEntity, update: .modified)
                 }
                 promise(.success(()))

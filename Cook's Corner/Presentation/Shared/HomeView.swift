@@ -35,9 +35,9 @@ struct HomeView: View {
             .navigationBarHidden(true)
         }
         .fullScreenCover(isPresented: $showSavedMeal) {
-//            NavigationStack{
-//                MealsSavedView()
-//            }
+            NavigationStack{
+            MealSavedView(mealViewModel: viewmodel)
+            }
         }
         .onChange(of: self.selectedCategory) {oldValue, newValue in
             viewmodel.getMealsByCategory(category: newValue)

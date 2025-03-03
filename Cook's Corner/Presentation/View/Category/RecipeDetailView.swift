@@ -18,11 +18,11 @@ struct RecipeDetailView: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: false, content: {
             VStack {
-                ForEach(mealViewModel.searchMealResult, id: \.idMeal) { searchMealResult in
+                ForEach(mealViewModel.searchMealResult, id: \.idMeal) { meal in
 
-                    HeaderView(meal: searchMealResult)
+                    HeaderView(meal: meal, mealViewModel: mealViewModel)
 
-                    BottomView(meal: searchMealResult)
+                    BottomView(meal: meal)
 
                 }
             }

@@ -13,7 +13,7 @@ struct MealDetailView: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: false, content: {
             VStack {
-                HeaderView(meal: meal)
+                HeaderView(meal: meal, mealViewModel: mealViewModel)
 
                 BottomView(meal: meal)
             }
