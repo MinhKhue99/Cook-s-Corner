@@ -113,7 +113,7 @@ extension HomeView {
             .background(RoundedRectangle(cornerRadius: 10).strokeBorder(Color.gray.opacity(0.3), lineWidth: 1))
             .padding(.top)
             .padding(.horizontal)
-//            .navigationDestination(isPresented: $showSearchResult, destination: {SearchView(name: $name)})
+            .navigationDestination(isPresented: $showSearchResult, destination: {SearchView(mealViewModel: viewmodel, name: $name)})
 
         }
     }

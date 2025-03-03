@@ -15,11 +15,11 @@ struct CategoryRecipesView: View {
     var body: some View {
         ScrollView(.horizontal,showsIndicators: false){
             LazyHStack {
-                ForEach(viewmodel.meals, id: \.idMeal) { recipe in
+                ForEach(viewmodel.meals, id: \.idMeal) { meal in
                     NavigationLink(
-                        destination: RecipeDetailView(mealViewModel: viewmodel, meal: recipe),
+                        destination: RecipeDetailView(mealViewModel: viewmodel, meal: meal),
                         label: {
-                            CategoryView(meal: recipe)
+                            CategoryView(meal: meal)
                         })
                 }
             }

@@ -1,59 +1,60 @@
 //
-//  CategoryView.swift
+//  RecipeView.swift
 //  Cook's Corner
 //
-//  Created by KhuePM on 14/12/24.
+//  Created by KhuePM on 19/12/24.
 //
 
 import SwiftUI
 
-struct CategoryView: View {
+struct RecipeView: View {
+
     // MARK:  Property
     var meal: Meal
 
     // MARK:  Body
     var body: some View {
-        VStack(spacing: 12) {
-            if meal.strMealThumb != nil{
-                AsyncImage(url: meal.strMealThumb) { img in
-                    img
+        HStack(alignment: .top) {
+            VStack(alignment: .leading, spacing: 8) {
+                Text(meal.strMeal ?? "")
+                    .font(.system(size: 19, weight: .bold))
+                    .foregroundColor(Color.black)
+                    .redacted(reason: meal.strMeal == nil ? .placeholder : .init())
+                    .lineLimit(1)
+
+                Text(meal.strCategory ?? "")
+                    .font(.system(size: 19, weight: .bold))
+                    .foregroundColor(.gray)
+                    .redacted(reason: meal.strCategory == nil ? .placeholder : .init())
+
+            }
+            .padding(.top)
+            .padding(.leading)
+
+            Spacer()
+
+            ZStack(alignment: .topTrailing) {
+                AsyncImage(url: meal.strMealThumb) { image in
+                    image
                         .resizable()
-                        .scaledToFill()
-                        .frame(width: 200, height:  300)
-
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
-                        .shadow(color: .black.opacity(0.4), radius: 2, x: -8, y: 5)
-
-                        .overlay {
-                            LinearGradient(colors: [.clear, .black.opacity(0.6)], startPoint: .top, endPoint: .bottom)
-                                .cornerRadius(12)
-                        }
-                        .overlay(alignment: .bottomLeading) {
-                            Text(meal.strMeal ?? "")
-                                .multilineTextAlignment(.leading)
-                                .font(.title2)
-                                .bold()
-                                .foregroundColor(.white)
-                                .frame(width: 120)
-                                .padding(.leading, 8)
-                                .padding(.bottom, 20)
-                        }
+                        .aspectRatio(contentMode: .fit)
+                        .foregroundColor(.gray)
+                        .redacted(reason: meal.strMealThumb == nil ? .placeholder : .init())
+                        .frame(maxWidth: 100, alignment: .center)
+                        .clipShape(RoundedRectangle(cornerRadius: 10.0, style: .continuous))
                 } placeholder: {
                     ProgressView()
-                        .frame(width: 200, height:  300)
                 }
-            } else {
-                Image(systemName: "photo.artframe")
-                    .imageScale(.large)
             }
         }
-
-        .padding()
+        .frame(width: UIScreen.main.bounds.width - 30)
+        .background(RoundedRectangle(cornerRadius: 10).strokeBorder(Color.gray.opacity(0.3), lineWidth: 1))
     }
 }
 
+
 #Preview {
-    CategoryView(meal: Meal(
+    RecipeView(meal: Meal(
         idMeal: "52771",
         strMeal: "Spicy Arrabiata Penne",
         strCategory: "Vegetarian",
