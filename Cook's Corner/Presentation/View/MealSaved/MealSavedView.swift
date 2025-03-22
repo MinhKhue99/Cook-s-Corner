@@ -22,7 +22,7 @@ struct MealSavedView: View {
                 List {
                     ForEach(savedMeals) {meal in
                         NavigationLink(
-                            destination: Text("Khue"),
+                            destination: MealSavedDetailView(meal: meal, mealViewModel: mealViewModel),
                             label: {
                                 MealSavedRowView(meal: meal)
                             }

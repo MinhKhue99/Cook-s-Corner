@@ -62,6 +62,16 @@ struct Meal: Codable {
     }
 }
 
+extension Meal: MealRepresentable {
+    func ingredient(at index: Int) -> String? {
+        self["strIngredient\(index)"]
+    }
+
+    func measure(at index: Int) -> String? {
+        self["strMeasure\(index)"]
+    }
+}
+
 struct MealResponse: Codable {
     var meals: [Meal]
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BottomView: View {
     @State var isInstructionTaped: Bool = false
-    var meal: Meal
+    var meal: any MealRepresentable
 
     var body: some View {
         VStack {
@@ -44,13 +44,11 @@ struct BottomView: View {
                 VStack {
                     HStack {
                         if isInstructionTaped {
-
                             Text(meal.strInstructions ?? "")
                                 .foregroundColor(.black)
                                 .fixedSize(horizontal: false, vertical: true)
                                 .onTapGesture(count: 2) {
-
-                                    withAnimation(.easeInOut(duration:1)) {
+                                    withAnimation(.easeInOut(duration: 1)) {
                                         isInstructionTaped.toggle()
                                     }
                                 }
@@ -59,31 +57,28 @@ struct BottomView: View {
                                 .foregroundColor(.black)
                                 .lineLimit(3)
                                 .onTapGesture(count: 2) {
-
-                                    withAnimation(.easeInOut(duration:1)) {
+                                    withAnimation(.easeInOut(duration: 1)) {
                                         isInstructionTaped.toggle()
                                     }
                                 }
                         }
                     }
                     .overlay(alignment: .bottomTrailing) {
-
                         Button {
-                            withAnimation(.easeInOut(duration:1)) {
+                            withAnimation(.easeInOut(duration: 1)) {
                                 isInstructionTaped.toggle()
                             }
-
                         } label: {
                             Image(systemName: isInstructionTaped ? "chevron.up.circle.fill" : "chevron.down.circle.fill")
                                 .foregroundColor(.black)
-                                .imageScale(.large).offset(x:10,y:36)
+                                .imageScale(.large)
+                                .offset(x: 10, y: 36)
                         }
                         .buttonStyle(.plain)
-
                     }
                 }
                 .padding()
-                .background{
+                .background {
                     RoundedRectangle(cornerRadius: 12, style: .continuous)
                         .foregroundColor(.gray.opacity(0.4))
                 }
@@ -105,15 +100,15 @@ struct BottomView: View {
                 .padding(.vertical)
                 .padding(.horizontal)
 
-                ForEach(0..<10) { i in
-                    if meal["strIngredient\(i)"] != nil && meal["strIngredient\(i)"] != "" {
+                ForEach(1..<10) { i in // Start at 1 since indices are 1-based
+                    if let ingredient = meal.ingredient(at: i), !ingredient.isEmpty {
                         VStack {
                             HStack {
-                                Text(meal["strIngredient\(i)"] ?? "Loading...")
+                                Text(ingredient)
 
                                 Spacer()
 
-                                Text(meal["strMeasure\(i)"] ?? "Loading...")
+                                Text(meal.measure(at: i) ?? "Loading...")
                                     .fontWeight(.bold)
                             }
                             .padding(.vertical)
@@ -124,10 +119,10 @@ struct BottomView: View {
                     }
                 }
 
-                if meal.strYoutube == "" {
+                if meal.strYoutube?.isEmpty ?? true {
                     EmptyView()
                 } else {
-                    NavigationLink(destination: YoutubeView(strYoutube: meal.strYoutube), label: {
+                    NavigationLink(destination: YoutubeView(strYoutube: meal.strYoutube ?? ""), label: {
                         Text("Start Cooking")
                             .fontWeight(.bold)
                             .foregroundColor(.white)

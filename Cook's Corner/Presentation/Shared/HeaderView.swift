@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HeaderView: View {
-    let meal: Meal
+    let meal: MealRepresentable
     @StateObject var mealViewModel: MealViewModel
     @State private var isFavorite = false
     @Environment(\.presentationMode) var presentation
@@ -39,6 +39,7 @@ struct HeaderView: View {
 
                                     Button(action: {
                                         mealViewModel.saveMeal(meal: meal)
+                                        isFavorite.toggle()
                                     }, label: {
                                         Image(systemName: isFavorite ? "bookmark.fill" : "bookmark")
                                             .foregroundColor(isFavorite ? Color.green : Color.black)
@@ -52,14 +53,12 @@ struct HeaderView: View {
                                 Spacer()
                             }
                             .padding(.top, safeAreaInsets.top)
-
-
                         }
                     )
             } placeholder: {
                 ProgressView()
             }
-
+            
         }
     }
 }

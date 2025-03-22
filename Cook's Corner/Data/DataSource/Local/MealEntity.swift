@@ -66,3 +66,42 @@ class MealEntity: Object, ObjectKeyIdentifiable {
         self.measure9 = measure9
     }
 }
+
+extension MealEntity: MealRepresentable {
+    var idMeal: String? { id }
+    var strMeal: String? { meal }
+    var strCategory: String? { category }
+    var strInstructions: String? { instructions }
+    var strMealThumb: URL? { mealThumbURL }
+    var strYoutube: String? { stringYoutube }
+
+    func ingredient(at index: Int) -> String? {
+        switch index {
+        case 1: return ingredient1
+        case 2: return ingredient2
+        case 3: return ingredient3
+        case 4: return ingredient4
+        case 5: return ingredient5
+        case 6: return ingredient6
+        case 7: return ingredient7
+        case 8: return ingredient8
+        case 9: return ingredient9
+        default: return nil
+        }
+    }
+
+    func measure(at index: Int) -> String? {
+        switch index {
+        case 1: return measure1
+        case 2: return measure2
+        case 3: return measure3
+        case 4: return measure4
+        case 5: return measure5
+        case 6: return measure6
+        case 7: return measure7
+        case 8: return measure8
+        case 9: return measure9
+        default: return nil
+        }
+    }
+}

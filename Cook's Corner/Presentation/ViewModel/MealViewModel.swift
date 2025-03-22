@@ -89,7 +89,7 @@ final class MealViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
-    func saveMeal(meal: Meal) {
+    func saveMeal(meal: any MealRepresentable) {
         saveMealUseCase.execute(meal: meal)
             .sink(receiveCompletion: { completion in
                 if case .failure(let error) = completion {

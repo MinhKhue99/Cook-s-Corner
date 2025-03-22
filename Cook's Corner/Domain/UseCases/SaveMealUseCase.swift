@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 protocol SaveMealUseCaseProtocol {
-    func execute(meal: Meal) -> AnyPublisher<Void, Error>
+    func execute(meal: any MealRepresentable) -> AnyPublisher<Void, Error>
 }
 
 final class SaveMealUseCase: SaveMealUseCaseProtocol {
@@ -17,7 +17,7 @@ final class SaveMealUseCase: SaveMealUseCaseProtocol {
     init(repository: RepositoryProtocol) {
         self.repository = repository
     }
-    func execute(meal: Meal) -> AnyPublisher<Void, any Error> {
+    func execute(meal: any MealRepresentable) -> AnyPublisher<Void, any Error> {
         repository.saveMeal(meal: meal)
     }
 }
