@@ -43,6 +43,7 @@ final class MealsRepository: RepositoryProtocol {
             do {
                 try self.realm.write {
                     let mealEntity = MealEntity()
+                    mealEntity.id = meal.idMeal
                     mealEntity.meal = meal.strMeal
                     mealEntity.mealThumbURL = meal.strMealThumb
                     mealEntity.category = meal.strCategory
@@ -80,8 +81,8 @@ final class MealsRepository: RepositoryProtocol {
         return Future<Void, Error> { promise in
             do {
                 try self.realm.write {
-                    if let objectToDelete = self.realm.object(ofType: MealEntity.self, forPrimaryKey: meal.id) {
-                        self.realm.delete(objectToDelete)
+                    if !meal.isInvalidated {
+                        self.realm.delete(meal)
                     }
                 }
                 promise(.success(()))

@@ -28,10 +28,11 @@ struct MealSavedView: View {
                             }
                         ).padding()
                     }
-                    .onDelete(perform: {indexSet in
+                    .onDelete(perform: { indexSet in
                         for index in indexSet{
                             let meal = savedMeals[index]
                             mealViewModel.deleteMeal(meal: meal)
+                            mealViewModel.getAllSavedMeals()
                         }})
                 }
             }

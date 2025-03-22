@@ -125,6 +125,5 @@ final class MealViewModel: ObservableObject {
                 print("KhuePM: \(meals)")
             })
             .store(in: &cancellables)
-
     }
 }
