@@ -13,9 +13,9 @@ struct MealSavedDetailView: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: false, content: {
             VStack {
-                HeaderView(meal: meal, mealViewModel: mealViewModel)
+                HeaderDetailView(meal: meal, mealViewModel: mealViewModel)
 
-                BottomView(meal: meal)
+                BottomDetailView(meal: meal)
             }
         })
         .navigationBarHidden(true)

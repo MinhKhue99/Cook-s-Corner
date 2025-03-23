@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct BottomView: View {
+struct BottomDetailView: View {
     @State var isInstructionTaped: Bool = false
     var meal: any MealRepresentable
 
@@ -142,7 +142,7 @@ struct BottomView: View {
 }
 
 #Preview {
-    BottomView(meal: Meal(
+    BottomDetailView(meal: Meal(
         idMeal: "52771",
         strMeal: "Spicy Arrabiata Penne",
         strCategory: "Vegetarian",

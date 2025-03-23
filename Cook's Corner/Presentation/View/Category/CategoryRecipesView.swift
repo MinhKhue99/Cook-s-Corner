@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CategoryRecipesView: View {
     // MARK:  Property
-    @StateObject var viewmodel: MealViewModel
+    @ObservedObject var viewmodel: MealViewModel
 
     // MARK:  Body
     var body: some View {

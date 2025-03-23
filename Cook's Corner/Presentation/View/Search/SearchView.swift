@@ -10,7 +10,7 @@ import SwiftUI
 struct SearchView: View {
     // MARK:  Property
     @Environment(\.presentationMode) var presentation
-    @StateObject var mealViewModel: MealViewModel
+    @ObservedObject var mealViewModel: MealViewModel
     @Binding var name: String
 
     // MARK:  Body

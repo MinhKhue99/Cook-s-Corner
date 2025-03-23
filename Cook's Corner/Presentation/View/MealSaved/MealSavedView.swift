@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MealSavedView: View {
-    @StateObject var mealViewModel: MealViewModel
+    @ObservedObject var mealViewModel: MealViewModel
     @Environment(\.presentationMode) var presentation
     var body: some View {
         NavigationStack {

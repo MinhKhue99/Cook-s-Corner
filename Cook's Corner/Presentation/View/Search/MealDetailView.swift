@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct MealDetailView: View {
-    @StateObject var mealViewModel: MealViewModel
+    @ObservedObject var mealViewModel: MealViewModel
     let meal: Meal
     var body: some View {
         ScrollView(.vertical, showsIndicators: false, content: {
             VStack {
-                HeaderView(meal: meal, mealViewModel: mealViewModel)
+                HeaderDetailView(meal: meal, mealViewModel: mealViewModel)
 
-                BottomView(meal: meal)
+                BottomDetailView(meal: meal)
             }
         })
         .navigationBarHidden(true)

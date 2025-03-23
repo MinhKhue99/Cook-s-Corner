@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct HeaderView: View {
+struct HeaderDetailView: View {
     let meal: MealRepresentable
-    @StateObject var mealViewModel: MealViewModel
+    @ObservedObject var mealViewModel: MealViewModel
     @State private var isFavorite = false
     @Environment(\.presentationMode) var presentation
     @Environment(\.safeAreaInsets) private var safeAreaInsets

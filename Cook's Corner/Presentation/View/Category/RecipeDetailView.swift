@@ -10,7 +10,6 @@ import SwiftUI
 struct RecipeDetailView: View {
 
     // MARK:  Property
-
     @StateObject var mealViewModel: MealViewModel
     var meal: Meal
 
@@ -20,9 +19,9 @@ struct RecipeDetailView: View {
             VStack {
                 ForEach(mealViewModel.searchMealResult, id: \.idMeal) { meal in
 
-                    HeaderView(meal: meal, mealViewModel: mealViewModel)
+                    HeaderDetailView(meal: meal, mealViewModel: mealViewModel)
 
-                    BottomView(meal: meal)
+                    BottomDetailView(meal: meal)
 
                 }
             }
