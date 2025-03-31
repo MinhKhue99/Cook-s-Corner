@@ -9,15 +9,15 @@ import Foundation
 import Combine
 
 protocol GetMealsByCategoryUseCaseProtocol {
-    func execute(category: String) -> AnyPublisher<[Meal], Error>
+    func execute(category: String) -> AnyPublisher<[MealEntity], Error>
 }
 
 final class GetMealsByCategoryUseCase: GetMealsByCategoryUseCaseProtocol {
-    private let repository: RepositoryProtocol
-    init(repository: RepositoryProtocol) {
+    private let repository: MealRepository
+    init(repository: MealRepository) {
         self.repository = repository
     }
-    func execute(category: String) -> AnyPublisher<[Meal], any Error> {
+    func execute(category: String) -> AnyPublisher<[MealEntity], any Error> {
         repository.getMealsByCategory(category: category)
     }
 }

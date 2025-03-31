@@ -9,15 +9,15 @@ import Foundation
 import Combine
 
 protocol SaveMealUseCaseProtocol {
-    func execute(meal: any MealRepresentable) -> AnyPublisher<Void, Error>
+    func execute(meal: MealEntity) -> AnyPublisher<Void, Error>
 }
 
 final class SaveMealUseCase: SaveMealUseCaseProtocol {
-    private let repository: RepositoryProtocol
-    init(repository: RepositoryProtocol) {
+    private let repository: MealRepository
+    init(repository: MealRepository) {
         self.repository = repository
     }
-    func execute(meal: any MealRepresentable) -> AnyPublisher<Void, any Error> {
+    func execute(meal: MealEntity) -> AnyPublisher<Void, any Error> {
         repository.saveMeal(meal: meal)
     }
 }

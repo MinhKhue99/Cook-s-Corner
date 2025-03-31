@@ -9,12 +9,15 @@ import Foundation
 import Combine
 
 final class MealViewModel: ObservableObject {
+    
     @Published var isLoading = false
+    @Published var isFavorite = false
     @Published var alert: AlertContent?
-    @Published var categories = [Category]()
-    @Published var meals = [Meal]()
-    @Published var searchMealResult = [Meal]()
+    @Published var categories = [CategoryEntity]()
+    @Published var meals = [MealEntity]()
+    @Published var searchMealResult = [MealEntity]()
     @Published var savedMeals = [MealEntity]()
+
     private var cancellables = Set<AnyCancellable>()
     private let getAllCategoriesUseCase: GetAllCategoriesUseCaseProtocol
     private let getMealsByCategoryUseCase: GetMealsByCategoryUseCaseProtocol
@@ -22,6 +25,7 @@ final class MealViewModel: ObservableObject {
     private let saveMealUseCase: SaveMealUseCaseProtocol
     private let deleteMealUseCase: DeleteMealUseCaseProtocol
     private let getAllSavedMealUseCase: GetAllSavedMealsUseCaseProtocol
+    private let checkFavoriteUseCase: CheckFavoriteUseCaseProtocol
 
     init(
         getAllCategoriesUseCase: GetAllCategoriesUseCaseProtocol,
@@ -29,7 +33,8 @@ final class MealViewModel: ObservableObject {
         searchMealUseCase: SearchMealUseCaseProtocol,
         saveMealUseCase: SaveMealUseCaseProtocol,
         deleteMealUseCase: DeleteMealUseCaseProtocol,
-        getAllSavedMealUseCase: GetAllSavedMealsUseCaseProtocol
+        getAllSavedMealUseCase: GetAllSavedMealsUseCaseProtocol,
+        checkFavoriteUseCase: CheckFavoriteUseCaseProtocol
     ) {
         self.getAllCategoriesUseCase = getAllCategoriesUseCase
         self.getMealsByCategoryUseCase = getMealsByCategoryUseCase
@@ -37,6 +42,7 @@ final class MealViewModel: ObservableObject {
         self.saveMealUseCase = saveMealUseCase
         self.deleteMealUseCase = deleteMealUseCase
         self.getAllSavedMealUseCase = getAllSavedMealUseCase
+        self.checkFavoriteUseCase = checkFavoriteUseCase
         getAllCategories()
     }
 
@@ -89,7 +95,7 @@ final class MealViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
-    func saveMeal(meal: any MealRepresentable) {
+    func saveMeal(meal: MealEntity) {
         saveMealUseCase.execute(meal: meal)
             .sink(receiveCompletion: { completion in
                 if case .failure(let error) = completion {
@@ -113,6 +119,23 @@ final class MealViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
+    func checkIfFavorite(idMeal: String) {
+        checkFavoriteUseCase.execute(idMeal: idMeal)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] isFav in
+                self?.isFavorite = isFav
+            })
+            .store(in: &cancellables)
+    }
+
+    func toggleFavorite(meal: MealEntity) {
+            if isFavorite {
+                deleteMeal(meal: meal)
+            } else {
+                saveMeal(meal: meal)
+            }
+        }
+
     func getAllSavedMeals() {
         getAllSavedMealUseCase.execute()
             .sink(receiveCompletion: { completetion in
@@ -122,7 +145,6 @@ final class MealViewModel: ObservableObject {
 
             }, receiveValue: { meals in
                 self.savedMeals = meals
-                print("KhuePM: \(meals)")
             })
             .store(in: &cancellables)
     }

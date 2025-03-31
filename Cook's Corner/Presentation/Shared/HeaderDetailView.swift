@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct HeaderDetailView: View {
-    let meal: MealRepresentable
-    @ObservedObject var mealViewModel: MealViewModel
-    @State private var isFavorite = false
+    @ObservedObject var viewmodel: MealViewModel
     @Environment(\.presentationMode) var presentation
     @Environment(\.safeAreaInsets) private var safeAreaInsets
+    let meal: MealEntity
+    let shouldShowSaveButton: Bool
     var body: some View {
         ZStack {
             AsyncImage(url: meal.strMealThumb) { image in
@@ -38,15 +38,17 @@ struct HeaderDetailView: View {
                                     Spacer()
 
                                     Button(action: {
-                                        mealViewModel.saveMeal(meal: meal)
-                                        isFavorite.toggle()
+                                        viewmodel.toggleFavorite(meal: meal)
+                                        viewmodel.isFavorite.toggle()
                                     }, label: {
-                                        Image(systemName: isFavorite ? "bookmark.fill" : "bookmark")
-                                            .foregroundColor(isFavorite ? Color.green : Color.black)
+                                        Image(systemName: viewmodel.isFavorite ? "bookmark.fill" : "bookmark")
+                                            .foregroundColor(viewmodel.isFavorite ? Color.green : Color.black)
                                             .padding()
                                             .background(Color.white)
                                             .clipShape(Circle())
+                                            .opacity(shouldShowSaveButton ? 1.0 : 0.0)
                                     })
+                                    .disabled(!shouldShowSaveButton)
                                 }
                                 .padding(.horizontal)
 
@@ -58,7 +60,12 @@ struct HeaderDetailView: View {
             } placeholder: {
                 ProgressView()
             }
-            
+
+        }
+        .onAppear {
+            if shouldShowSaveButton {
+                viewmodel.checkIfFavorite(idMeal: meal.idMeal ?? "")
+            }
         }
     }
 }

@@ -10,14 +10,13 @@ import SwiftUI
 struct CategoryRecipesView: View {
     // MARK:  Property
     @ObservedObject var viewmodel: MealViewModel
-
     // MARK:  Body
     var body: some View {
         ScrollView(.horizontal,showsIndicators: false){
             LazyHStack {
                 ForEach(viewmodel.meals, id: \.idMeal) { meal in
                     NavigationLink(
-                        destination: RecipeDetailView(mealViewModel: viewmodel, meal: meal),
+                        destination: MealDetailView(viewmodel: viewmodel, meal: meal, shouldFetchMealDetails: true, shouldShowSaveButton: true),
                         label: {
                             CategoryView(meal: meal)
                         })

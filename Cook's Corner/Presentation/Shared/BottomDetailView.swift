@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BottomDetailView: View {
     @State var isInstructionTaped: Bool = false
-    var meal: any MealRepresentable
+    var meal: MealEntity
 
     var body: some View {
         VStack {
@@ -100,23 +100,22 @@ struct BottomDetailView: View {
                 .padding(.vertical)
                 .padding(.horizontal)
 
-                ForEach(1..<10) { i in // Start at 1 since indices are 1-based
-                    if let ingredient = meal.ingredient(at: i), !ingredient.isEmpty {
-                        VStack {
-                            HStack {
-                                Text(ingredient)
+                ForEach(meal.ingredients.indices, id: \.self) { index in
+                    let ingredient = meal.ingredients[index]
+                    VStack {
+                        HStack {
+                            Text(ingredient.ingredient)
 
-                                Spacer()
-
-                                Text(meal.measure(at: i) ?? "Loading...")
-                                    .fontWeight(.bold)
-                            }
-                            .padding(.vertical)
-
-                            Divider()
+                            Spacer()
+                            
+                            Text(ingredient.measure)
+                                .fontWeight(.bold)
                         }
-                        .padding(.horizontal)
+                        .padding(.vertical)
+
+                        Divider()
                     }
+                    .padding(.horizontal)
                 }
 
                 if meal.strYoutube?.isEmpty ?? true {
@@ -142,7 +141,7 @@ struct BottomDetailView: View {
 }
 
 #Preview {
-    BottomDetailView(meal: Meal(
+    BottomDetailView(meal: MealEntity(
         idMeal: "52771",
         strMeal: "Spicy Arrabiata Penne",
         strCategory: "Vegetarian",

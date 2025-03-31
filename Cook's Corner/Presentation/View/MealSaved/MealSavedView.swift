@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct MealSavedView: View {
-    @ObservedObject var mealViewModel: MealViewModel
+    @ObservedObject var viewmodel: MealViewModel
     @Environment(\.presentationMode) var presentation
+
     var body: some View {
         NavigationStack {
-            let savedMeals = mealViewModel.savedMeals
+            let savedMeals = viewmodel.savedMeals
             if savedMeals.isEmpty {
                 Text("No results")
                     .font(.system(size: 21, weight: .semibold))
@@ -20,9 +21,9 @@ struct MealSavedView: View {
                     .padding(.top)
             } else {
                 List {
-                    ForEach(savedMeals) {meal in
+                    ForEach(savedMeals, id: \.idMeal) {meal in
                         NavigationLink(
-                            destination: MealSavedDetailView(meal: meal, mealViewModel: mealViewModel),
+                            destination: MealDetailView(viewmodel: viewmodel, meal: meal, shouldFetchMealDetails: false, shouldShowSaveButton: false),
                             label: {
                                 MealSavedRowView(meal: meal)
                             }
@@ -31,8 +32,8 @@ struct MealSavedView: View {
                     .onDelete(perform: { indexSet in
                         for index in indexSet{
                             let meal = savedMeals[index]
-                            mealViewModel.deleteMeal(meal: meal)
-                            mealViewModel.getAllSavedMeals()
+                            viewmodel.deleteMeal(meal: meal)
+                            viewmodel.getAllSavedMeals()
                         }})
                 }
             }
@@ -53,7 +54,7 @@ struct MealSavedView: View {
             })
         }
         .task {
-            mealViewModel.getAllSavedMeals()
+            viewmodel.getAllSavedMeals()
         }
     }
 }

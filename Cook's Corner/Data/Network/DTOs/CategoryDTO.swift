@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Category: Codable {
+struct CategoryDTO: Codable {
     let idCategory: String?
     let strCategory: String?
     let strCategoryThumb: String?
@@ -15,5 +15,5 @@ struct Category: Codable {
 }
 
 struct CategoryResponse: Codable {
-    let categories: [Category]
+    let categories: [CategoryDTO]
 }

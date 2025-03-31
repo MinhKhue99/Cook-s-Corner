@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Meal: Codable {
+struct MealDTO: Codable {
     var idMeal: String?
     var strMeal: String?
     var strCategory: String?
@@ -62,16 +62,16 @@ struct Meal: Codable {
     }
 }
 
-extension Meal: MealRepresentable {
-    func ingredient(at index: Int) -> String? {
-        self["strIngredient\(index)"]
-    }
-
-    func measure(at index: Int) -> String? {
-        self["strMeasure\(index)"]
-    }
-}
+//extension MealDTO: MealRepresentable {
+//    func ingredient(at index: Int) -> String? {
+//        self["strIngredient\(index)"]
+//    }
+//
+//    func measure(at index: Int) -> String? {
+//        self["strMeasure\(index)"]
+//    }
+//}
 
 struct MealResponse: Codable {
-    var meals: [Meal]
+    var meals: [MealDTO]
 }

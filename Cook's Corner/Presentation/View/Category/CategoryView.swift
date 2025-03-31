@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CategoryView: View {
     // MARK:  Property
-    var meal: Meal
+    var meal: MealEntity
 
     // MARK:  Body
     var body: some View {
@@ -53,7 +53,7 @@ struct CategoryView: View {
 }
 
 #Preview {
-    CategoryView(meal: Meal(
+    CategoryView(meal: MealEntity(
         idMeal: "52771",
         strMeal: "Spicy Arrabiata Penne",
         strCategory: "Vegetarian",

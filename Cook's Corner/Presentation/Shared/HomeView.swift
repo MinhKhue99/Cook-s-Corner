@@ -36,7 +36,7 @@ struct HomeView: View {
         }
         .fullScreenCover(isPresented: $showSavedMeal) {
             NavigationStack{
-            MealSavedView(mealViewModel: viewmodel)
+                MealSavedView(viewmodel: viewmodel)
             }
         }
         .onChange(of: self.selectedCategory) {oldValue, newValue in
@@ -113,7 +113,7 @@ extension HomeView {
             .background(RoundedRectangle(cornerRadius: 10).strokeBorder(Color.gray.opacity(0.3), lineWidth: 1))
             .padding(.top)
             .padding(.horizontal)
-            .navigationDestination(isPresented: $showSearchResult, destination: {SearchView(mealViewModel: viewmodel, name: $name)})
+            .navigationDestination(isPresented: $showSearchResult, destination: {SearchView(viewmodel: viewmodel, name: $name)})
 
         }
     }

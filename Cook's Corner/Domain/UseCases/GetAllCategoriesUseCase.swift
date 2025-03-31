@@ -9,15 +9,15 @@ import Foundation
 import Combine
 
 protocol GetAllCategoriesUseCaseProtocol {
-    func execute() -> AnyPublisher<[Category], Error>
+    func execute() -> AnyPublisher<[CategoryEntity], Error>
 }
 
 final class GetAllCategoriesUseCase: GetAllCategoriesUseCaseProtocol {
-    private let repository: RepositoryProtocol
-    init(repository: RepositoryProtocol) {
+    private let repository: MealRepository
+    init(repository: MealRepository) {
         self.repository = repository
     }
-    func execute() -> AnyPublisher<[Category], any Error> {
+    func execute() -> AnyPublisher<[CategoryEntity], any Error> {
         repository.getAllCategories()
     }
 }

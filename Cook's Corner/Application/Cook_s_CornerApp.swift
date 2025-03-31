@@ -9,27 +9,24 @@ import SwiftUI
 
 @main
 struct Cook_s_CornerApp: App {
+
+    let viewmodel: MealViewModel
+
+    init() {
+        let container = DependencyContainer()
+        self.viewmodel = MealViewModel(
+            getAllCategoriesUseCase: container.resolve(GetAllCategoriesUseCase.self)!,
+            getMealsByCategoryUseCase: container.resolve(GetMealsByCategoryUseCase.self)!,
+            searchMealUseCase: container.resolve(SearchMealUseCase.self)!,
+            saveMealUseCase: container.resolve(SaveMealUseCase.self)!,
+            deleteMealUseCase: container.resolve(DeleteMealUseCase.self)!,
+            getAllSavedMealUseCase: container.resolve(GetAllSavedMealsUseCase.self)!,
+            checkFavoriteUseCase: container.resolve(CheckFavoriteUseCase.self)!
+        )
+    }
+
     var body: some Scene {
-        WindowGroup {
-
-            let api = MealService()
-            let repository = MealsRepository(api: api)
-            let getAllCategoriesUseCase = GetAllCategoriesUseCase(repository: repository)
-            let getMealsByCategoryUseCase = GetMealsByCategoryUseCase(repository: repository)
-            let searchMealUseCase = SearchMealUseCase(repository: repository)
-            let saveMealUseCase = SaveMealUseCase(repository: repository)
-            let deleteMealUseCase = DeleteMealUseCase(repository: repository)
-            let getAllSavedMealsUseCase = GetAllSavedMealsUseCase(repository: repository)
-
-            let viewmodel = MealViewModel(
-                getAllCategoriesUseCase: getAllCategoriesUseCase,
-                getMealsByCategoryUseCase: getMealsByCategoryUseCase,
-                searchMealUseCase: searchMealUseCase,
-                saveMealUseCase: saveMealUseCase,
-                deleteMealUseCase: deleteMealUseCase,
-                getAllSavedMealUseCase: getAllSavedMealsUseCase
-            )
-            
+        WindowGroup {            
             HomeView(viewmodel: viewmodel)
         }
     }

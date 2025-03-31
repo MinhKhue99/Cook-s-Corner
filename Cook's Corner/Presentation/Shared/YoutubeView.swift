@@ -13,7 +13,7 @@ struct YoutubeView: View {
 
     // MARK:  Property
     @Environment(\.presentationMode) var presentation
-    var strYoutube: String?
+    let strYoutube: String?
 
     // MARK:  Body
     var body: some View {
@@ -55,5 +55,5 @@ struct YoutubeView: View {
 }
 
 #Preview {
-    YoutubeView()
+    YoutubeView(strYoutube: "https://www.youtube.com/watch?v=1IszT_guI08")
 }

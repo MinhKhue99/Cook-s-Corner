@@ -13,8 +13,8 @@ protocol DeleteMealUseCaseProtocol {
 }
 
 final class DeleteMealUseCase: DeleteMealUseCaseProtocol {
-    private var repository: RepositoryProtocol
-    init(repository: RepositoryProtocol) {
+    private var repository: MealRepository
+    init(repository: MealRepository) {
         self.repository = repository
     }
 

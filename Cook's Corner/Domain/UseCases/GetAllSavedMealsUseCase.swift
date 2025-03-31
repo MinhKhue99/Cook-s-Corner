@@ -13,8 +13,8 @@ protocol GetAllSavedMealsUseCaseProtocol {
 }
 
 final class GetAllSavedMealsUseCase: GetAllSavedMealsUseCaseProtocol {
-    private var repository: RepositoryProtocol
-    init(repository: RepositoryProtocol) {
+    private var repository: MealRepository
+    init(repository: MealRepository) {
         self.repository = repository
     }
 

@@ -10,7 +10,7 @@ import SwiftUI
 struct SearchView: View {
     // MARK:  Property
     @Environment(\.presentationMode) var presentation
-    @ObservedObject var mealViewModel: MealViewModel
+    @ObservedObject var viewmodel: MealViewModel
     @Binding var name: String
 
     // MARK:  Body
@@ -42,12 +42,12 @@ struct SearchView: View {
                 .padding(.horizontal)
                 .padding(.top)
 
-                if !mealViewModel.searchMealResult.isEmpty {
+                if !viewmodel.searchMealResult.isEmpty {
                     VStack {
-                        ForEach(mealViewModel.searchMealResult, id: \.idMeal) { meal in
+                        ForEach(viewmodel.searchMealResult, id: \.idMeal) { meal in
                             NavigationLink(
                                 destination: {
-                                    MealDetailView(mealViewModel: mealViewModel, meal: meal)
+                                    MealDetailView(viewmodel: viewmodel, meal: meal, shouldFetchMealDetails: true, shouldShowSaveButton: true)
                                 },
                                 label: {
                                     RecipeView(meal: meal)
@@ -67,14 +67,14 @@ struct SearchView: View {
         })
         .navigationBarHidden(true)
         .task {
-            mealViewModel.searchMeal(name: self.name)
+            viewmodel.searchMeal(name: self.name)
         }
-        .alert(item: $mealViewModel.alert) { alert in
+        .alert(item: $viewmodel.alert) { alert in
             Alert(
                 title: Text(alert.title),
                 message: Text(alert.message),
                 dismissButton: .default(Text("OK")) {
-                    mealViewModel.alert = nil
+                    viewmodel.alert = nil
                 }
             )
         }

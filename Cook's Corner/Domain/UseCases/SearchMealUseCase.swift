@@ -9,15 +9,15 @@ import Foundation
 import Combine
 
 protocol SearchMealUseCaseProtocol {
-    func execute(name: String) -> AnyPublisher<[Meal], Error>
+    func execute(name: String) -> AnyPublisher<[MealEntity], Error>
 }
 
 final class SearchMealUseCase: SearchMealUseCaseProtocol {
-    private let repository: RepositoryProtocol
-    init(repository: RepositoryProtocol) {
+    private let repository: MealRepository
+    init(repository: MealRepository) {
         self.repository = repository
     }
-    func execute(name: String) -> AnyPublisher<[Meal], any Error> {
+    func execute(name: String) -> AnyPublisher<[MealEntity], any Error> {
         repository.searchMeal(name: name)
     }
 }
