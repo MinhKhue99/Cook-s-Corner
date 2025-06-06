@@ -8,7 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		500EA4D12D09ECC4006F0F61 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 500EA4D02D09ECC4006F0F61 /* RealmSwift */; };
+		50675D862DF1E15F00CC1A38 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 50675D852DF1E15F00CC1A38 /* Kingfisher */; };
+		508C35F12DE7EBB7008E74B9 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 508C35F02DE7EBB7008E74B9 /* Swinject */; };
 		50D63E772D0DBE410080BB35 /* YouTubePlayerKit in Frameworks */ = {isa = PBXBuildFile; productRef = 50D63E762D0DBE410080BB35 /* YouTubePlayerKit */; };
+		50F6B03A2DC315C60065255C /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 50F6B0392DC315C60065255C /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,8 +31,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50F6B03A2DC315C60065255C /* Alamofire in Frameworks */,
 				50D63E772D0DBE410080BB35 /* YouTubePlayerKit in Frameworks */,
 				500EA4D12D09ECC4006F0F61 /* RealmSwift in Frameworks */,
+				508C35F12DE7EBB7008E74B9 /* Swinject in Frameworks */,
+				50675D862DF1E15F00CC1A38 /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,6 +80,9 @@
 			packageProductDependencies = (
 				500EA4D02D09ECC4006F0F61 /* RealmSwift */,
 				50D63E762D0DBE410080BB35 /* YouTubePlayerKit */,
+				50F6B0392DC315C60065255C /* Alamofire */,
+				508C35F02DE7EBB7008E74B9 /* Swinject */,
+				50675D852DF1E15F00CC1A38 /* Kingfisher */,
 			);
 			productName = "Cook's Corner";
 			productReference = 500EA4A92D09D628006F0F61 /* Cook's Corner.app */;
@@ -106,6 +115,9 @@
 			packageReferences = (
 				500EA4CF2D09ECC4006F0F61 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				50D63E752D0DBE410080BB35 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */,
+				50F6B0382DC315C60065255C /* XCRemoteSwiftPackageReference "Alamofire" */,
+				508C35EF2DE7EBB7008E74B9 /* XCRemoteSwiftPackageReference "Swinject" */,
+				50675D842DF1E15F00CC1A38 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 500EA4AA2D09D628006F0F61 /* Products */;
@@ -272,8 +284,9 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -300,8 +313,9 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -347,12 +361,36 @@
 				kind = branch;
 			};
 		};
+		50675D842DF1E15F00CC1A38 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.3.2;
+			};
+		};
+		508C35EF2DE7EBB7008E74B9 /* XCRemoteSwiftPackageReference "Swinject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swinject/Swinject.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.9.1;
+			};
+		};
 		50D63E752D0DBE410080BB35 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SvenTiigi/YouTubePlayerKit.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.9.0;
+			};
+		};
+		50F6B0382DC315C60065255C /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -363,10 +401,25 @@
 			package = 500EA4CF2D09ECC4006F0F61 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
 		};
+		50675D852DF1E15F00CC1A38 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 50675D842DF1E15F00CC1A38 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		508C35F02DE7EBB7008E74B9 /* Swinject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 508C35EF2DE7EBB7008E74B9 /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = Swinject;
+		};
 		50D63E762D0DBE410080BB35 /* YouTubePlayerKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 50D63E752D0DBE410080BB35 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */;
 			productName = YouTubePlayerKit;
+		};
+		50F6B0392DC315C60065255C /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 50F6B0382DC315C60065255C /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

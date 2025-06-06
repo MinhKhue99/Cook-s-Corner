@@ -9,10 +9,10 @@ import SwiftUI
 
 struct MealSavedView: View {
     @ObservedObject var viewmodel: MealViewModel
-    @Environment(\.presentationMode) var presentation
+    @EnvironmentObject var coordinator: AppCoordinator
 
     var body: some View {
-        NavigationStack {
+        NavigationView(content: {
             let savedMeals = viewmodel.savedMeals
             if savedMeals.isEmpty {
                 Text("No results")
@@ -22,12 +22,12 @@ struct MealSavedView: View {
             } else {
                 List {
                     ForEach(savedMeals, id: \.idMeal) {meal in
-                        NavigationLink(
-                            destination: MealDetailView(viewmodel: viewmodel, meal: meal, shouldFetchMealDetails: false, shouldShowSaveButton: false),
-                            label: {
-                                MealSavedRowView(meal: meal)
+                        MealSavedRowView(meal: meal)
+                            .onTapGesture {
+                                coordinator.push(.mealSavedDetail(meal))
                             }
-                        ).padding()
+                            .padding()
+
                     }
                     .onDelete(perform: { indexSet in
                         for index in indexSet{
@@ -37,19 +37,18 @@ struct MealSavedView: View {
                         }})
                 }
             }
-        }
+        })
         .navigationTitle("Meal Saved")
         .toolbar {
             ToolbarItem(placement: .topBarLeading, content: {
                 Button(action: {
-                    presentation.wrappedValue.dismiss()
+                    coordinator.pop()
                 }, label: {
-                    Image(systemName: "xmark")
+                    Image(systemName: "chevron.left")
                         .foregroundColor(Color.gray)
                         .padding()
                         .background(Color.white)
                         .clipShape(Circle())
-                        .shadow(radius: 5)
                 })
             })
         }
@@ -58,7 +57,3 @@ struct MealSavedView: View {
         }
     }
 }
-
-//#Preview {
-//    MealSavedView()
-//}

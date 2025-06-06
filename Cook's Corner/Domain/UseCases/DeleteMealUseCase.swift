@@ -9,16 +9,16 @@ import Foundation
 import Combine
 
 protocol DeleteMealUseCaseProtocol {
-    func execute(meal: MealEntity) -> AnyPublisher<Void, Error>
+    func execute(meal: Meal) -> AnyPublisher<Void, Error>
 }
 
-final class DeleteMealUseCase: DeleteMealUseCaseProtocol {
-    private var repository: MealRepository
-    init(repository: MealRepository) {
+class DeleteMealUseCase: DeleteMealUseCaseProtocol {
+    private var repository: MealRepositoryProtocol
+    init(repository: MealRepositoryProtocol) {
         self.repository = repository
     }
 
-    func execute(meal: MealEntity) -> AnyPublisher<Void, any Error> {
+    func execute(meal: Meal) -> AnyPublisher<Void, any Error> {
         repository.deleteMeal(meal: meal)
     }
 }

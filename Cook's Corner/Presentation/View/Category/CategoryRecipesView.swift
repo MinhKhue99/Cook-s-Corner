@@ -10,16 +10,19 @@ import SwiftUI
 struct CategoryRecipesView: View {
     // MARK:  Property
     @ObservedObject var viewmodel: MealViewModel
+    @EnvironmentObject var coordinator: AppCoordinator
+    init(viewmodel: MealViewModel) {
+        self.viewmodel = viewmodel
+    }
     // MARK:  Body
     var body: some View {
         ScrollView(.horizontal,showsIndicators: false){
             LazyHStack {
                 ForEach(viewmodel.meals, id: \.idMeal) { meal in
-                    NavigationLink(
-                        destination: MealDetailView(viewmodel: viewmodel, meal: meal, shouldFetchMealDetails: true, shouldShowSaveButton: true),
-                        label: {
-                            CategoryView(meal: meal)
-                        })
+                    CategoryView(meal: meal)
+                        .onTapGesture {
+                            coordinator.push(.mealDetail(meal))
+                        }
                 }
             }
         }
@@ -32,6 +35,5 @@ struct CategoryRecipesView: View {
                 }
             )
         }
-
     }
 }

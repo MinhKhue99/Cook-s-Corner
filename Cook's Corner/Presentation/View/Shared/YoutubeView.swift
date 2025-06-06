@@ -1,63 +1,69 @@
 //
-//  RecipeView.swift
+//  YoutubeView.swift
 //  Cook's Corner
 //
-//  Created by KhuePM on 19/12/24.
+//  Created by KhuePM on 14/12/24.
 //
 
 import SwiftUI
-import Kingfisher
+import WebKit
+import YouTubePlayerKit
 
-struct RecipeView: View {
+struct YoutubeView: View {
 
     // MARK:  Property
-    var meal: Meal
+    @EnvironmentObject var coordinator: AppCoordinator
+    let meal: Meal
 
     // MARK:  Body
     var body: some View {
-        HStack(alignment: .top) {
-            VStack(alignment: .leading, spacing: 8) {
-                Text(meal.strMeal ?? "")
-                    .font(.system(size: 19, weight: .bold))
-                    .foregroundColor(Color.black)
-                    .redacted(reason: meal.strMeal == nil ? .placeholder : .init())
-                    .lineLimit(1)
+        VStack(alignment: .center) {
+            HStack {
+                Button(action: {
+                    coordinator.pop()
+                }, label: {
+                    Image(systemName: "chevron.left")
+                        .foregroundColor(Color.gray)
+                        .padding()
+                        .background(Color.white)
+                        .clipShape(Circle())
+                        .shadow(radius: 5)
+                })
 
-                Text(meal.strCategory ?? "")
-                    .font(.system(size: 19, weight: .bold))
-                    .foregroundColor(.gray)
-                    .redacted(reason: meal.strCategory == nil ? .placeholder : .init())
+                Spacer()
             }
-            .padding(.top)
-            .padding(.leading)
+            .padding(.horizontal)
+
+            HStack(alignment: .center) {
+                Text(meal.strMeal ?? "")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+            }
 
             Spacer()
 
-            ZStack(alignment: .topTrailing) {
-                KFImage(meal.strMealThumb)
-                    .resizable()
-                    .placeholder {
-                        ProgressView()
-                            .frame(maxWidth: 100, alignment: .center)
-                    }
-                    .onFailure { error in
-                        print("Failed to load image: \(error)")
-                    }
-                    .cacheOriginalImage()
-                    .fade(duration: 0.25)
-                    .aspectRatio(contentMode: .fit)
-                    .foregroundColor(.gray)
-                    .frame(maxWidth: 100, alignment: .center)
-                    .clipShape(RoundedRectangle(cornerRadius: 10.0, style: .continuous))
-            }
+            YouTubePlayerView(YouTubePlayer(
+                source: .url(meal.strYoutube ?? ""),
+                configuration: .init(
+                    autoPlay: true,
+                    showControls: true,
+                    showFullscreenButton: true
+
+                )
+            ))
+            .frame(width: UIScreen.main.bounds.width, height: 300)
+            .padding(.vertical)
+
+            Spacer()
         }
-        .frame(width: UIScreen.main.bounds.width - 30)
-        .background(RoundedRectangle(cornerRadius: 10).strokeBorder(Color.gray.opacity(0.3), lineWidth: 1))
+        .navigationBarHidden(true)
     }
 }
 
 #Preview {
-    RecipeView(
+    YoutubeView(
         meal: Meal(
             idMeal: "52771",
             strMeal: "Spicy Arrabiata Penne",

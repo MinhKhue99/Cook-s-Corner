@@ -9,25 +9,11 @@ import SwiftUI
 
 @main
 struct Cook_s_CornerApp: App {
-
-    let viewmodel: MealViewModel
-
-    init() {
-        let container = DependencyContainer()
-        self.viewmodel = MealViewModel(
-            getAllCategoriesUseCase: container.resolve(GetAllCategoriesUseCase.self)!,
-            getMealsByCategoryUseCase: container.resolve(GetMealsByCategoryUseCase.self)!,
-            searchMealUseCase: container.resolve(SearchMealUseCase.self)!,
-            saveMealUseCase: container.resolve(SaveMealUseCase.self)!,
-            deleteMealUseCase: container.resolve(DeleteMealUseCase.self)!,
-            getAllSavedMealUseCase: container.resolve(GetAllSavedMealsUseCase.self)!,
-            checkFavoriteUseCase: container.resolve(CheckFavoriteUseCase.self)!
-        )
-    }
-
+    let dependencyContainer = DependencyContainer.shared
     var body: some Scene {
-        WindowGroup {            
-            HomeView(viewmodel: viewmodel)
+        WindowGroup {
+            AppView()
+                .environmentObject(dependencyContainer.resolve(AppCoordinator.self))
         }
     }
 }

@@ -9,10 +9,10 @@ import SwiftUI
 
 struct MealDetailView: View {
     @ObservedObject var viewmodel: MealViewModel
-    let meal: MealEntity?
+    let meal: Meal?
     let shouldFetchMealDetails: Bool
     let shouldShowSaveButton: Bool
-    private var displayedMeal: MealEntity? {
+    private var displayedMeal: Meal? {
         if shouldFetchMealDetails, let fetchedMeal = viewmodel.searchMealResult.first {
             return fetchedMeal
         }

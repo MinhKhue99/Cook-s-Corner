@@ -6,25 +6,34 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct HeaderDetailView: View {
     @ObservedObject var viewmodel: MealViewModel
-    @Environment(\.presentationMode) var presentation
+    @EnvironmentObject var coordinator: AppCoordinator
     @Environment(\.safeAreaInsets) private var safeAreaInsets
-    let meal: MealEntity
+    let meal: Meal
     let shouldShowSaveButton: Bool
     var body: some View {
         ZStack {
-            CachedImageView(url: ((meal.strMealThumb!)))
-                .foregroundColor(.gray)
-                .redacted(reason: meal.strMealThumb == nil ? .placeholder : .init())
+            KFImage(meal.strMealThumb!)
+                .placeholder {
+                    ProgressView()
+                }
+                .onFailure { error in
+                    print("Failed to load image: \(error)")
+                }
+                .cacheOriginalImage()
+                .fade(duration: 0.25)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
                 .frame(width: UIScreen.main.bounds.width, height:  UIScreen.main.bounds.width)
                 .overlay(
                     ZStack {
                         VStack {
                             HStack {
                                 Button(action: {
-                                    presentation.wrappedValue.dismiss()
+                                    coordinator.pop()
                                 }, label: {
                                     Image(systemName: "chevron.left")
                                         .foregroundColor(Color.gray)
@@ -48,6 +57,7 @@ struct HeaderDetailView: View {
                                 })
                                 .disabled(!shouldShowSaveButton)
                             }
+
                             .padding(.horizontal)
 
                             Spacer()

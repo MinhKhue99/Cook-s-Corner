@@ -9,9 +9,9 @@ import SwiftUI
 
 struct SearchView: View {
     // MARK:  Property
-    @Environment(\.presentationMode) var presentation
     @ObservedObject var viewmodel: MealViewModel
-    @Binding var name: String
+    @EnvironmentObject var coordinator: AppCoordinator
+    let name: String
 
     // MARK:  Body
     var body: some View {
@@ -19,7 +19,7 @@ struct SearchView: View {
             VStack {
                 HStack {
                     Button(action: {
-                        presentation.wrappedValue.dismiss()
+                        coordinator.pop()
                     }, label: {
                         Image(systemName: "chevron.left")
                             .foregroundColor(Color.gray)
@@ -43,16 +43,12 @@ struct SearchView: View {
                 .padding(.top)
 
                 if !viewmodel.searchMealResult.isEmpty {
-                    VStack {
+                    LazyVStack {
                         ForEach(viewmodel.searchMealResult, id: \.idMeal) { meal in
-                            NavigationLink(
-                                destination: {
-                                    MealDetailView(viewmodel: viewmodel, meal: meal, shouldFetchMealDetails: true, shouldShowSaveButton: true)
-                                },
-                                label: {
-                                    RecipeView(meal: meal)
+                            RecipeView(meal: meal)
+                                .onTapGesture {
+                                    coordinator.push(.mealDetail(meal))
                                 }
-                            )
                         }
                     }
                 } else {
