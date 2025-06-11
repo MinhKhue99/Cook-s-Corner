@@ -60,17 +60,37 @@ struct MealDTO: Codable {
         default: return ""
         }
     }
-}
 
-//extension MealDTO: MealRepresentable {
-//    func ingredient(at index: Int) -> String? {
-//        self["strIngredient\(index)"]
-//    }
-//
-//    func measure(at index: Int) -> String? {
-//        self["strMeasure\(index)"]
-//    }
-//}
+    func toDoMain() -> Meal {
+        Meal(
+            idMeal: self.idMeal,
+            strMeal: self.strMeal,
+            strCategory: self.strCategory,
+            strInstructions: self.strInstructions,
+            strMealThumb: self.strMealThumb,
+            strYoutube: self.strYoutube,
+            strIngredient1: self.strIngredient1,
+            strIngredient2: self.strIngredient2,
+            strIngredient3: self.strIngredient3,
+            strIngredient4: self.strIngredient4,
+            strIngredient5: self.strIngredient5,
+            strIngredient6: self.strIngredient6,
+            strIngredient7: self.strIngredient7,
+            strIngredient8: self.strIngredient8,
+            strIngredient9: self.strIngredient9,
+
+            strMeasure1: self.strMeasure1,
+            strMeasure2: self.strMeasure2,
+            strMeasure3: self.strMeasure3,
+            strMeasure4: self.strMeasure4,
+            strMeasure5: self.strMeasure5,
+            strMeasure6: self.strMeasure6,
+            strMeasure7: self.strMeasure7,
+            strMeasure8: self.strMeasure8,
+            strMeasure9: self.strMeasure9
+        )
+    }
+}
 
 struct MealResponse: Codable {
     var meals: [MealDTO]

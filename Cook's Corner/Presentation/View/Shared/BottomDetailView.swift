@@ -9,7 +9,8 @@ import SwiftUI
 
 struct BottomDetailView: View {
     @State var isInstructionTaped: Bool = false
-    var meal: MealEntity
+    @EnvironmentObject var coordinator: AppCoordinator
+    var meal: Meal
 
     var body: some View {
         VStack {
@@ -107,7 +108,7 @@ struct BottomDetailView: View {
                             Text(ingredient.ingredient)
 
                             Spacer()
-                            
+
                             Text(ingredient.measure)
                                 .fontWeight(.bold)
                         }
@@ -121,7 +122,9 @@ struct BottomDetailView: View {
                 if meal.strYoutube?.isEmpty ?? true {
                     EmptyView()
                 } else {
-                    NavigationLink(destination: YoutubeView(strYoutube: meal.strYoutube ?? ""), label: {
+                    Button(action: {
+                        coordinator.push(.youtube(meal))
+                    }, label: {
                         Text("Start Cooking")
                             .fontWeight(.bold)
                             .foregroundColor(.white)
@@ -141,7 +144,7 @@ struct BottomDetailView: View {
 }
 
 #Preview {
-    BottomDetailView(meal: MealEntity(
+    BottomDetailView(meal: Meal(
         idMeal: "52771",
         strMeal: "Spicy Arrabiata Penne",
         strCategory: "Vegetarian",

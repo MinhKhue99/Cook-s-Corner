@@ -12,6 +12,15 @@ struct CategoryDTO: Codable {
     let strCategory: String?
     let strCategoryThumb: String?
     let strCategoryDescription: String?
+
+    func toDoMain() -> Category {
+        Category(
+            idCategory: self.idCategory,
+            strCategory: self.strCategory,
+            strCategoryThumb: self.strCategoryThumb,
+            strCategoryDescription: self.strCategoryDescription
+        )
+    }
 }
 
 struct CategoryResponse: Codable {

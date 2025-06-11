@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MealEntity {
+struct Meal: Hashable {
     var idMeal: String?
     var strMeal: String?
     var strCategory: String?
@@ -24,7 +24,7 @@ struct MealEntity {
     var strIngredient7: String?
     var strIngredient8: String?
     var strIngredient9: String?
-
+    
     var strMeasure1: String?
     var strMeasure2: String?
     var strMeasure3: String?
@@ -52,9 +52,5 @@ struct MealEntity {
                 guard let ingredient = ingredient, !ingredient.isEmpty else { return nil }
                 return (ingredient, measure ?? "") // If measure is nil, use empty string
             }
-    }
-
-    func update(from meal: MealEntity) {
-        
     }
 }

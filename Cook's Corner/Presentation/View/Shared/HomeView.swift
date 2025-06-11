@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeView: View {
     // MARK:  Property
     @StateObject var viewmodel: MealViewModel
+    @EnvironmentObject var coordinator: AppCoordinator
     @State var name = ""
     @State var selectedCategory = "Beef"
     @State var selectedIndex = 1
@@ -19,10 +20,9 @@ struct HomeView: View {
 
     // MARK:  Body
     var body: some View {
-        NavigationStack {
+        NavigationView(content: {
             VStack(alignment: .leading) {
                 headerView
-
                 Divider()
                     .padding(.top, 8)
 
@@ -33,13 +33,8 @@ struct HomeView: View {
                 }
             }
             .navigationBarHidden(true)
-        }
-        .fullScreenCover(isPresented: $showSavedMeal) {
-            NavigationStack{
-                MealSavedView(viewmodel: viewmodel)
-            }
-        }
-        .onChange(of: self.selectedCategory) {oldValue, newValue in
+        })
+        .onChange(of: self.selectedCategory) { newValue in
             viewmodel.getMealsByCategory(category: newValue)
         }
         .task {
@@ -58,7 +53,6 @@ struct HomeView: View {
 }
 
 extension HomeView {
-    // MARK:  headerView
     private var headerView: some View {
         ZStack {
             HStack {
@@ -66,8 +60,7 @@ extension HomeView {
                 Spacer()
 
                 Button(action: {
-                    // MARK:  Todo
-                    showSavedMeal.toggle()
+                    coordinator.push(.mealSaved)
                 }, label: {
                     Image(systemName: "bookmark.fill")
                         .font(.system(size: 19, weight: .bold))
@@ -101,20 +94,20 @@ extension HomeView {
                     .font(.system(size: 27, weight: .bold))
                     .foregroundColor(.gray)
 
-                TextField("Try 'Salad'",
-                          text: $name,
-                          onCommit: {
-                    showSearchResult = true
-                    self.name = ""
-                })
+                TextField(
+                    "Try 'Salad'",
+                    text: $name,
+                    onCommit: {
+                        coordinator.push(.searchResult(name))
+                        self.name = ""
+                    }
+                )
                 .font(.system(size: 21))
             }
             .padding()
             .background(RoundedRectangle(cornerRadius: 10).strokeBorder(Color.gray.opacity(0.3), lineWidth: 1))
             .padding(.top)
             .padding(.horizontal)
-            .navigationDestination(isPresented: $showSearchResult, destination: {SearchView(viewmodel: viewmodel, name: $name)})
-
         }
     }
 
@@ -148,7 +141,6 @@ extension HomeView {
                     }
                 }
                 .padding(.horizontal)
-
             }
             .padding(.top)
 

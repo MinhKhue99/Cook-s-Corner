@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CategoryEntity {
+struct Category {
     let idCategory: String?
     let strCategory: String?
     let strCategoryThumb: String?

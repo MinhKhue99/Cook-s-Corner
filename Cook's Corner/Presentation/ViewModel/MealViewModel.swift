@@ -9,14 +9,14 @@ import Foundation
 import Combine
 
 final class MealViewModel: ObservableObject {
-    
+
     @Published var isLoading = false
     @Published var isFavorite = false
     @Published var alert: AlertContent?
-    @Published var categories = [CategoryEntity]()
-    @Published var meals = [MealEntity]()
-    @Published var searchMealResult = [MealEntity]()
-    @Published var savedMeals = [MealEntity]()
+    @Published var categories = [Category]()
+    @Published var meals = [Meal]()
+    @Published var searchMealResult = [Meal]()
+    @Published var savedMeals = [Meal]()
 
     private var cancellables = Set<AnyCancellable>()
     private let getAllCategoriesUseCase: GetAllCategoriesUseCaseProtocol
@@ -95,8 +95,9 @@ final class MealViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
-    func saveMeal(meal: MealEntity) {
+    func saveMeal(meal: Meal) {
         saveMealUseCase.execute(meal: meal)
+            .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 if case .failure(let error) = completion {
                     self.alert = AlertContent(title: "Save meal fail", message: error.localizedDescription)
@@ -107,8 +108,9 @@ final class MealViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
-    func deleteMeal(meal: MealEntity) {
+    func deleteMeal(meal: Meal) {
         deleteMealUseCase.execute(meal: meal)
+            .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 if case .failure(let error) = completion {
                     self.alert = AlertContent(title: "Delete meal fail", message: error.localizedDescription)
@@ -128,16 +130,17 @@ final class MealViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
-    func toggleFavorite(meal: MealEntity) {
-            if isFavorite {
-                deleteMeal(meal: meal)
-            } else {
-                saveMeal(meal: meal)
-            }
+    func toggleFavorite(meal: Meal) {
+        if isFavorite {
+            deleteMeal(meal: meal)
+        } else {
+            saveMeal(meal: meal)
         }
+    }
 
     func getAllSavedMeals() {
         getAllSavedMealUseCase.execute()
+            .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completetion in
                 if case .failure(let error) = completetion {
                     self.alert = AlertContent(title: "Get meals fail", message: error.localizedDescription)

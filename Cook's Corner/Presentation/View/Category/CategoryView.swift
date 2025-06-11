@@ -6,54 +6,58 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct CategoryView: View {
     // MARK:  Property
-    var meal: MealEntity
+    var meal: Meal
 
     // MARK:  Body
     var body: some View {
         VStack(spacing: 12) {
-            if meal.strMealThumb != nil{
-                AsyncImage(url: meal.strMealThumb) { img in
-                    img
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 200, height:  300)
+            if meal.strMealThumb != nil {
+                KFImage(meal.strMealThumb)
+                    .resizable()
+                    .placeholder {
+                        ProgressView()
+                            .frame(width: 200, height:  300)
+                    }
+                    .onFailure { error in
+                        print("Failed to load image: \(error)")
+                    }
+                    .cacheOriginalImage()
+                    .fade(duration: 0.25)
+                    .scaledToFill()
+                    .frame(width: 200, height:  300)
 
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
-                        .shadow(color: .black.opacity(0.4), radius: 2, x: -8, y: 5)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .shadow(color: .black.opacity(0.4), radius: 2, x: -8, y: 5)
 
-                        .overlay {
-                            LinearGradient(colors: [.clear, .black.opacity(0.6)], startPoint: .top, endPoint: .bottom)
-                                .cornerRadius(12)
-                        }
-                        .overlay(alignment: .bottomLeading) {
-                            Text(meal.strMeal ?? "")
-                                .multilineTextAlignment(.leading)
-                                .font(.title2)
-                                .bold()
-                                .foregroundColor(.white)
-                                .frame(width: 120)
-                                .padding(.leading, 8)
-                                .padding(.bottom, 20)
-                        }
-                } placeholder: {
-                    ProgressView()
-                        .frame(width: 200, height:  300)
-                }
+                    .overlay {
+                        LinearGradient(colors: [.clear, .black.opacity(0.6)], startPoint: .top, endPoint: .bottom)
+                            .cornerRadius(12)
+                    }
+                    .overlay(alignment: .bottomLeading) {
+                        Text(meal.strMeal ?? "")
+                            .multilineTextAlignment(.leading)
+                            .font(.title2.bold())
+                            .foregroundColor(.white)
+                            .frame(width: 120)
+                            .padding(.leading, 8)
+                            .padding(.bottom, 20)
+                    }
             } else {
                 Image(systemName: "photo.artframe")
                     .imageScale(.large)
+                    .frame(width: 200, height:  300)
             }
         }
-
         .padding()
     }
 }
 
 #Preview {
-    CategoryView(meal: MealEntity(
+    CategoryView(meal: Meal(
         idMeal: "52771",
         strMeal: "Spicy Arrabiata Penne",
         strCategory: "Vegetarian",

@@ -12,8 +12,8 @@ protocol CheckFavoriteUseCaseProtocol {
 }
 
 class CheckFavoriteUseCase: CheckFavoriteUseCaseProtocol {
-    private var repository: MealRepository
-    init(repository: MealRepository) {
+    private var repository: MealRepositoryProtocol
+    init(repository: MealRepositoryProtocol) {
         self.repository = repository
     }
     func execute(idMeal: String) -> AnyPublisher<Bool, any Error> {
